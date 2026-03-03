@@ -7,7 +7,7 @@
     "build": "astro build",
     "preview": "astro preview",
     "astro": "astro",
-    "decap": "decap-server"
+    "decap": "npx decap-server"
   },
   "dependencies": {
     "@tailwindcss/vite": "^4.2.1",

@@ -10,9 +10,10 @@ public_folder: "/uploads"
 
 locale: 'uk'
 
-media_library:
-  config:
-    max_file_size: 10000000 # 10MB in bytes
+slug:
+  encoding: "ascii"
+  clean_accents: true
+  sanitize_replacement: "-"
 
 collections:
   - name: "history"
@@ -93,14 +94,17 @@ collections:
     media_folder: "public/uploads/events/{{slug}}"
     public_folder: "/uploads/events/{{slug}}"
     create: true
-    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    slug: "{{year}}-{{month}}-{{day}}-{{fields.slug}}"
     extension: "md"
     format: "frontmatter"
     fields:
       - label: "Title"
         name: "title"
         widget: "string"
-        
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: false
       - label: "Date"
         name: "date"
         widget: "datetime"
