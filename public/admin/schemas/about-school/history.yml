@@ -1,0 +1,7 @@
+- label: "Body"
+  name: "body"
+  widget: "markdown"
+
+- label: "Title"
+  name: "title"
+  widget: "string"

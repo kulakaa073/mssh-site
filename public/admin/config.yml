@@ -1,15 +1,198 @@
+local_backend: true
+
+backend:
+  name: github
+  repo: dummy/dummy # required but ignored locally
+  branch: main
+
+media_folder: "public/uploads"
+public_folder: "/uploads"
+
+locale: 'uk'
+
+media_library:
+  config:
+    max_file_size: 10000000 # 10MB in bytes
+
 collections:
-  - name: "blog" # Used in routes, e.g., /admin/collections/blog
-    label: "Blog" # Used in the UI
-    folder: "src/content/blog" # The path to the folder where the documents are stored
-    create: true # Allow users to create new documents in this collection
-    fields: # The fields for each document, usually in frontmatter
-      - { label: "Layout", name: "layout", widget: "hidden", default: "blog" }
-      - { label: "Title", name: "title", widget: "string" }
-      - { label: "Publish Date", name: "date", widget: "datetime" }
-      - { label: "Featured Image", name: "thumbnail", widget: "image" }
-      - { label: "Rating (scale of 1-5)", name: "rating", widget: "number" }
-      - { label: "Body", name: "body", widget: "markdown" }
-      
-media_folder: "src/assets/images" # Location where files will be stored in the repo
-public_folder: "src/assets/images" # The src attribute for uploaded media
+  - name: "history"
+    label: "History"
+    folder: "src/content/about-school/history"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - label: "Body"
+        name: "body"
+        widget: "markdown"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+
+  - name: "workers"
+    label: "Workers"
+    folder: "src/content/about-school/workers"
+    media_folder: "public/uploads/workers/{{slug}}"
+    public_folder: "/uploads/workers/{{slug}}"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - label: "Name"
+        name: "Name"
+        widget: "string"
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Education"
+        name: "education"
+        widget: "markdown"
+      - label: "Description"
+        name: "description"
+        widget: "text"
+      - label: "Photo"
+        name: "photo"
+        widget: "image"
+
+  - name: "documents"
+    label: "Documents"
+    folder: "src/content/public-info/documents"
+    media_folder: "public/uploads/documents/{{slug}}"
+    public_folder: "/uploads/documents/{{slug}}"
+    create: true
+    slug: "{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+      - label: "Slug"
+        name: "slug"
+        widget: "string"
+        required: false
+      - label: "Publish Date"
+        name: "date"
+        widget: "datetime"
+      - label: "Featured Image"
+        name: "thumbnail"
+        widget: "image"
+        required: false
+      - label: "Upload Document (PDF, DOCX)"
+        name: "document"
+        widget: "file"
+        hint: "Max 10MB. Do NOT upload videos."
+        media_library:
+          allow_multiple: false
+
+  - name: "events"
+    label: "Events"
+    folder: "src/content/educational-process/events"
+    media_folder: "public/uploads/events/{{slug}}"
+    public_folder: "/uploads/events/{{slug}}"
+    create: true
+    slug: "{{year}}-{{month}}-{{day}}-{{slug}}"
+    extension: "md"
+    format: "frontmatter"
+    fields:
+      - label: "Title"
+        name: "title"
+        widget: "string"
+        
+      - label: "Date"
+        name: "date"
+        widget: "datetime"
+        date_format: "DD-MM-YYYY"
+        time_format: false
+
+      - label: "Sections"
+        name: "sections"
+        widget: "list"
+        types:
+        # 1️⃣ Markdown Text Block
+        - label: "Markdown Text"
+          name: "markdown"
+          widget: "object"
+          fields:
+            - label: "Content"
+              name: "content"
+              widget: "markdown"
+        # 2️⃣ Video Block
+        - label: "Video"
+          name: "video"
+          widget: "object"
+          fields:
+            - label: "Video URL (YouTube/Vimeo)"
+              name: "url"
+              widget: "string"
+            - label: "Caption"
+              name: "caption"
+              widget: "string"
+              required: false
+        # 3️⃣ Single Image
+        - label: "Single Image"
+          name: "image"
+          widget: "object"
+          fields:
+            - label: "Image"
+              name: "image"
+              widget: "image"
+            - label: "Alt Text"
+              name: "alt"
+              widget: "string"
+            - label: "Caption"
+              name: "caption"
+              widget: "string"
+              required: false
+        # 4️⃣ Gallery
+        - label: "Gallery"
+          name: "gallery"
+          widget: "object"
+          fields:
+            - label: "Images"
+              name: "images"
+              widget: "list"
+              field:
+                label: "Image"
+                name: "image"
+                widget: "image"
+        # 5️⃣ Slider Gallery
+        - label: "Slider Gallery"
+          name: "slider"
+          widget: "object"
+          fields:
+            - label: "Slides"
+              name: "slides"
+              widget: "list"
+              fields:
+                - label: "Image"
+                  name: "image"
+                  widget: "image"
+                - label: "Caption"
+                  name: "caption"
+                  widget: "string"
+                  required: false
+        # 6️⃣ Carousel (Image + Title + Text + Link)
+        - label: "Carousel"
+          name: "carousel"
+          widget: "object"
+          fields:
+            - label: "Items"
+              name: "items"
+              widget: "list"
+              fields:
+                - label: "Image"
+                  name: "image"
+                  widget: "image"
+                - label: "Title"
+                  name: "title"
+                  widget: "string"
+                - label: "Text"
+                  name: "text"
+                  widget: "text"
+                - label: "Link"
+                  name: "link"
+                  widget: "string"
+                  required: false

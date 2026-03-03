@@ -1,0 +1,23 @@
+- label: "Project Name"
+  name: "title"
+  widget: "string"
+
+- label: "Description"
+  name: "description"
+  widget: "text"
+
+- label: "Cover Image"
+  name: "image"
+  widget: "image"
+
+- label: "Tech Stack"
+  name: "tech"
+  widget: "list"
+  field:
+    label: "Tech"
+    name: "tech"
+    widget: "string"
+
+- label: "Body"
+  name: "body"
+  widget: "markdown"
