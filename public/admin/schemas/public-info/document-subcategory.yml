@@ -1,0 +1,17 @@
+- label: "Title"
+  name: "title"
+  widget: "string"
+- label: "Slug"
+  name: "slug"
+  widget: "string"
+- label: "Parent Category"
+  name: "parentCategory"
+  widget: "relation"
+  collection: "document-categories"
+  search_fields: ["title"]
+  value_field: "slug"
+  display_fields: ["title"]
+  required: false
+- label: "Order"
+  name: "order"
+  widget: "number"

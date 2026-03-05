@@ -1,0 +1,10 @@
+- label: "Title"
+  name: "title"
+  widget: "string"
+- label: "Date Range"
+  name: "dateRange"
+  widget: "string"
+  required: false
+- label: "Body"
+  name: "body"
+  widget: "markdown"

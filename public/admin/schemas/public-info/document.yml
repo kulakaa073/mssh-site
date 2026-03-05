@@ -1,26 +1,30 @@
 - label: "Title"
   name: "title"
   widget: "string"
-
-- label: "Slug"
-  name: "slug"
-  widget: "string"
+- label: "Category"
+  name: "category"
+  widget: "relation"
+  collection: "document-categories"
+  search_fields: ["title"]
+  value_field: "slug"
+  display_fields: ["title"]
   required: false
-
+- label: "Subcategory"
+  name: "subcategory"
+  widget: "relation"
+  collection: "document-subcategories"
+  search_fields: ["title"]
+  value_field: "slug"
+  display_fields: ["title"]
+  required: false
 - label: "Publish Date"
   name: "date"
   widget: "datetime"
-
 - label: "Featured Image"
   name: "thumbnail"
   widget: "image"
   required: false
-
-- label: "Draft"
-  name: "draft"
-  widget: "boolean"
-  default: false
-
-- label: "Body"
-  name: "body"
-  widget: "markdown"
+- label: "Upload Document (PDF, DOCX)"
+  name: "document"
+  widget: "file"
+  hint: "Max 10MB. Do NOT upload videos."

@@ -1,23 +1,103 @@
-- label: "Project Name"
+- label: "Title"
   name: "title"
   widget: "string"
-
-- label: "Description"
-  name: "description"
-  widget: "text"
-
-- label: "Cover Image"
-  name: "image"
-  widget: "image"
-
-- label: "Tech Stack"
-  name: "tech"
+- label: "Slug"
+  name: "slug"
+  widget: "string"
+  required: false
+- label: "Date"
+  name: "date"
+  widget: "datetime"
+  date_format: "DD-MM-YYYY"
+  time_format: false
+- label: "Category"
+  name: "category"
+  widget: "relation"
+  collection: "event-categories"
+  search_fields: ["title"]
+  value_field: "slug"
+  display_fields: ["title"]
+  required: false
+- label: "Sections"
+  name: "sections"
   widget: "list"
-  field:
-    label: "Tech"
-    name: "tech"
-    widget: "string"
-
-- label: "Body"
-  name: "body"
-  widget: "markdown"
+  types:
+    - label: "Markdown Text"
+      name: "markdown"
+      widget: "object"
+      fields:
+        - label: "Content"
+          name: "content"
+          widget: "markdown"
+    - label: "Video"
+      name: "video"
+      widget: "object"
+      fields:
+        - label: "Video URL (YouTube/Vimeo)"
+          name: "url"
+          widget: "string"
+        - label: "Caption"
+          name: "caption"
+          widget: "string"
+          required: false
+    - label: "Single Image"
+      name: "image"
+      widget: "object"
+      fields:
+        - label: "Image"
+          name: "image"
+          widget: "image"
+        - label: "Alt Text"
+          name: "alt"
+          widget: "string"
+        - label: "Caption"
+          name: "caption"
+          widget: "string"
+          required: false
+    - label: "Gallery"
+      name: "gallery"
+      widget: "object"
+      fields:
+        - label: "Images"
+          name: "images"
+          widget: "list"
+          field:
+            label: "Image"
+            name: "image"
+            widget: "image"
+    - label: "Slider Gallery"
+      name: "slider"
+      widget: "object"
+      fields:
+        - label: "Slides"
+          name: "slides"
+          widget: "list"
+          fields:
+            - label: "Image"
+              name: "image"
+              widget: "image"
+            - label: "Caption"
+              name: "caption"
+              widget: "string"
+              required: false
+    - label: "Carousel"
+      name: "carousel"
+      widget: "object"
+      fields:
+        - label: "Items"
+          name: "items"
+          widget: "list"
+          fields:
+            - label: "Image"
+              name: "image"
+              widget: "image"
+            - label: "Title"
+              name: "title"
+              widget: "string"
+            - label: "Text"
+              name: "text"
+              widget: "text"
+            - label: "Link"
+              name: "link"
+              widget: "string"
+              required: false
