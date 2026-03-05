@@ -413,3 +413,4 @@ collections:
       - label: "Body"
         name: "body"
         widget: "markdown"
+
