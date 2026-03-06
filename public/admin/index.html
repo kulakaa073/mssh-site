@@ -22,28 +22,36 @@
         Ю:'Yu', Я:'Ya', а:'a', б:'b', в:'v', г:'h', ґ:'g', д:'d', е:'e', є:'ye',
         ж:'zh', з:'z', и:'y', і:'i', ї:'yi', й:'y', к:'k', л:'l', м:'m', н:'n',
         о:'o', п:'p', р:'r', с:'s', т:'t', у:'u', ф:'f', х:'kh', ц:'ts', ч:'ch',
-        ш:'sh', щ:'shch', ю:'yu', я:'ya', ь:'', ' ':'-'
+        ш:'sh', щ:'shch', ю:'yu', я:'ya', ь:'', ' ':'-',
+        "'":'', '’':'', 'ʼ':''
       };
       return str.split('').map(c => map[c] || c).join('');
+    }
+
+    function toAsciiSlug(input) {
+      return transliterate(String(input))
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/(^-|-$)/g, '');
     }
 
     // --- Pre-save handler for auto slug (no collisions check) ---
     CMS.registerEventListener({
       name: 'preSave',
       handler: ({ entry }) => {
+        const name = entry.getIn(['data', 'Name']);
         const title = entry.getIn(['data', 'title']);
-        let slug = entry.getIn(['data', 'slug']);
+        const sourceText = (name && String(name).trim() !== '') ? name : title;
+        const currentSlug = entry.getIn(['data', 'slug']);
+        const hasSlug = currentSlug && String(currentSlug).trim() !== '';
 
-        if (!title) return entry;
+        if (!sourceText && !hasSlug) return entry;
 
-        // Only generate slug on first save
-        if (!slug || slug.trim() === '') {
-          const baseSlug = transliterate(title)
-            .toLowerCase()
-            .replace(/[^a-z0-9]+/g, '-')
-            .replace(/(^-|-$)/g, '');
+        const nextSlug = toAsciiSlug(hasSlug ? currentSlug : sourceText);
+        const shouldNormalizeExisting = hasSlug && String(currentSlug) !== nextSlug && /[^a-z0-9-]/i.test(String(currentSlug));
 
-          entry = entry.setIn(['data', 'slug'], baseSlug);
+        if (!hasSlug || shouldNormalizeExisting) {
+          entry = entry.setIn(['data', 'slug'], nextSlug);
         }
 
         return entry;
