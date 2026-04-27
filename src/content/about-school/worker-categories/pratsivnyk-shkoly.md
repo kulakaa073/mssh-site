@@ -1,5 +1,5 @@
 ---
 title: Працівник школи
 slug: pratsivnyk-shkoly
-order: 0
+order: 2
 ---

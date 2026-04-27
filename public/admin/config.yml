@@ -116,6 +116,10 @@ collections:
         name: "slug"
         widget: "string"
         required: false
+      - label: "Archived"
+        name: "isArchived"
+        widget: "boolean"
+        required: false
       - label: "Category"
         name: "category"
         widget: "relation"

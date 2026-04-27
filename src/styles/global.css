@@ -1,1 +1,96 @@
 @import "tailwindcss";
+
+/* Header / navigation styles adapted from original theme */
+
+body {
+  font-family: 'Work Sans', system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+  font-size: 15px;
+  color: #000;
+}
+
+.top-header {
+  border-bottom: 1px solid #e5e5e5;
+  border-top: 3px solid #feca16;
+  padding: 19px 0 19px;
+}
+
+.top-header .logo-block {
+  margin-top: 3px;
+  text-align: center;
+}
+
+.top-header .logo-block a {
+  text-decoration: none;
+}
+
+.top-header .logo-block a h3 {
+  color: #29363e;
+  display: block;
+  font-family: 'Work Sans', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  letter-spacing: 1.36px;
+  margin: 6px 0 0;
+  text-transform: uppercase;
+  word-wrap: break-word;
+}
+
+.menu-block {
+  margin-top: -1px;
+}
+
+.ow-navigation {
+  border: none;
+  border-radius: 0;
+  margin-bottom: 0;
+  min-height: 1px;
+  float: left;
+}
+
+.ow-navigation .nav.navbar-nav > li {
+  margin: 0 8px;
+}
+
+.ow-navigation .nav.navbar-nav > li:last-of-type {
+  margin-right: 0;
+}
+
+.ow-navigation .nav.navbar-nav li > a {
+  color: #222;
+  font-size: 13px;
+  text-transform: uppercase;
+  padding: 6px 15px;
+  line-height: 20px;
+  font-family: 'Josefin Sans', system-ui, sans-serif;
+  font-weight: 700;
+}
+
+.ow-navigation .nav.navbar-nav > li > a {
+  padding: 30px 15px;
+  letter-spacing: 1.95px;
+  color: #222;
+}
+
+.ow-navigation .nav.navbar-nav > li.active > a,
+.ow-navigation .nav.navbar-nav > li:hover > a,
+.ow-navigation .nav.navbar-nav > li > a:hover {
+  background-color: transparent;
+  color: #feca16;
+}
+
+.ow-navigation .dropdown-menu {
+  border-radius: 0;
+  box-shadow: none;
+}
+
+.menu-block .menu-search {
+  float: right;
+  display: inline-block;
+  height: 80px;
+  width: 80px;
+  text-align: center;
+  border-left: 1px solid #e5e5e5;
+  border-right: 1px solid #e5e5e5;
+  position: relative;
+}
+

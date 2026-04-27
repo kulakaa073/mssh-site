@@ -1,0 +1,33 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const slug = Astro.params.slug;
+const path = Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`;
+
+const titleByPath: Record<string, string> = {
+  '/kontakty': 'Контакти',
+  '/pro-shkolu/administratsiya': 'Адміністрація',
+  '/pro-shkolu/struktura': 'Структура закладу',
+  '/pro-shkolu/istorychna-dovidka': 'Історична довідка',
+  '/publichna-informatsiya/dokumenty': 'Документи',
+  '/publichna-informatsiya/informatsiya': 'Інформація',
+  '/publichna-informatsiya/publichni-koshty': 'Публічні кошти',
+  '/publichna-informatsiya/mtz': 'Матеріально-технічне забезпечення',
+  '/vykhovnyj-protses/npv': 'Національно-патріотичне виховання',
+  '/vykhovnyj-protses/pvr': 'Право-виховна робота',
+  '/vykhovnyj-protses/fis': 'Фізкультура і спорт',
+  '/vykhovnyj-protses/gurt': 'Корекційно-розвиткова робота',
+  '/vykhovnyj-protses/soc': 'Соціалізація і профорієнтація',
+  '/vykhovnyj-protses/svyato': 'Загальношкільні свята'
+};
+
+const pageTitle = titleByPath[path] ?? 'Сторінка';
+---
+
+<Layout title={pageTitle}>
+  <main class="mx-auto max-w-6xl px-4 py-10">
+    <h1 class="text-2xl font-semibold tracking-tight">{pageTitle}</h1>
+    <p class="mt-3 text-slate-700">Контент готується.</p>
+  </main>
+</Layout>
+

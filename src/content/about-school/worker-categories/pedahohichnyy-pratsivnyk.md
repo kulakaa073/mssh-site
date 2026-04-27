@@ -1,5 +1,5 @@
 ---
 title: Педагогічний працівник
 slug: pedahohichnyy-pratsivnyk
-order: 0
+order: 1
 ---

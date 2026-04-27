@@ -1,0 +1,81 @@
+---
+type Props = {
+  contacts?: {
+    schoolName?: string;
+    address?: string;
+    phoneMain?: string;
+    phoneAdditional?: string[];
+    email?: string;
+    workingHours?: string;
+    socialLinks?: { label: string; url: string }[];
+  } | null;
+};
+
+const { contacts } = Astro.props as Props;
+---
+
+<footer class="mt-12 border-t border-slate-200 bg-white">
+  <div class="mx-auto max-w-6xl px-4 py-10">
+    <div class="grid gap-10 md:grid-cols-2">
+      <section>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-700">Контакти</h2>
+        <dl class="mt-4 space-y-3 text-sm text-slate-700">
+          <div>
+            <dt class="font-medium text-slate-900">Адреса</dt>
+            <dd class="mt-1">{contacts?.address ?? '—'}</dd>
+          </div>
+          <div>
+            <dt class="font-medium text-slate-900">Телефон</dt>
+            <dd class="mt-1">
+              {contacts?.phoneMain ? <a class="underline" href={`tel:${contacts.phoneMain}`}>{contacts.phoneMain}</a> : '—'}
+              {contacts?.phoneAdditional?.length ? (
+                <span class="ml-2 text-slate-500">
+                  ({contacts.phoneAdditional.filter(Boolean).join(', ')})
+                </span>
+              ) : null}
+            </dd>
+          </div>
+          <div>
+            <dt class="font-medium text-slate-900">Email</dt>
+            <dd class="mt-1">
+              {contacts?.email ? <a class="underline" href={`mailto:${contacts.email}`}>{contacts.email}</a> : '—'}
+            </dd>
+          </div>
+          <div>
+            <dt class="font-medium text-slate-900">Графік роботи</dt>
+            <dd class="prose prose-slate mt-1 max-w-none text-sm">
+              {contacts?.workingHours ? <Fragment set:html={contacts.workingHours} /> : '—'}
+            </dd>
+          </div>
+        </dl>
+
+        {contacts?.socialLinks?.length ? (
+          <div class="mt-6">
+            <h3 class="text-sm font-semibold text-slate-900">Соцмережі</h3>
+            <ul class="mt-2 flex flex-wrap gap-2">
+              {contacts.socialLinks.map((s) => (
+                <li>
+                  <a class="rounded-md border border-slate-200 bg-slate-50 px-3 py-1 text-sm hover:bg-white" href={s.url}>
+                    {s.label}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ) : null}
+      </section>
+
+      <section>
+        <h2 class="text-sm font-semibold uppercase tracking-wide text-slate-700">Адміністрація</h2>
+        <p class="mt-4 text-sm text-slate-700">Контент готується.</p>
+      </section>
+    </div>
+  </div>
+
+  <div class="border-t border-slate-200 bg-slate-50">
+    <div class="mx-auto max-w-6xl px-4 py-4 text-sm text-slate-600">
+      © {new Date().getFullYear()} {contacts?.schoolName ?? 'Магдалинівська спеціальна школа'}
+    </div>
+  </div>
+</footer>
+
