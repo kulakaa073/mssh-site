@@ -1,0 +1,21 @@
+---
+type SectionVariant = 'default' | 'narrow' | 'wide';
+
+type Props = {
+  variant?: SectionVariant;
+  className?: string;
+};
+
+const { variant = 'default', className = '' } = Astro.props as Props;
+
+const sectionClass = ['section-padding', className].filter(Boolean).join(' ');
+
+const containerClass =
+  variant === 'wide' ? 'container-fluid' : variant === 'narrow' ? 'container section-narrow' : 'container';
+---
+
+<section class={sectionClass}>
+  <div class={containerClass}>
+    <slot />
+  </div>
+</section>

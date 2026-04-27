@@ -1,0 +1,25 @@
+---
+import Breadcrumbs, { type BreadcrumbItem } from './Breadcrumbs.astro';
+
+type Props = {
+  title: string;
+  subtitle?: string;
+  breadcrumbs?: BreadcrumbItem[];
+};
+
+const { title, subtitle, breadcrumbs = [] } = Astro.props as Props;
+const safeTitle = title?.trim() || '';
+const safeSubtitle = subtitle?.trim();
+---
+
+{
+  safeTitle && (
+    <div class="page-banner container-fluid no-padding">
+      <div class="banner-content">
+        <h3>{safeTitle}</h3>
+        {safeSubtitle && <p class="page-subtitle">{safeSubtitle}</p>}
+        {breadcrumbs.length > 0 && <Breadcrumbs items={breadcrumbs} />}
+      </div>
+    </div>
+  )
+}

@@ -1,6 +1,10 @@
 ---
 import Layout from '../layouts/Layout.astro';
 
+export async function getStaticPaths() {
+  return [];
+}
+
 const slug = Astro.params.slug;
 const path = Array.isArray(slug) ? `/${slug.join('/')}` : `/${slug ?? ''}`;
 

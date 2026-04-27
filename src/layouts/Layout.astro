@@ -1,71 +1,91 @@
 ---
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import { getContacts } from '../lib/content/settings';
 import '../styles/global.css';
 
 type Breadcrumb = { label: string; href?: string };
 
 type Props = {
-	title?: string;
-	description?: string;
-	breadcrumbs?: Breadcrumb[];
-	pageTitle?: string;
-	noBanner?: boolean;
+  title?: string;
+  description?: string;
+  breadcrumbs?: Breadcrumb[];
+  pageTitle?: string;
+  noBanner?: boolean;
 };
 
 const {
-	title,
-	description,
-	breadcrumbs,
-	pageTitle,
-	// reserved for Phase 3 (PageBanner)
-	noBanner: _noBanner
+  title,
+  description,
+  breadcrumbs,
+  pageTitle,
+  // reserved for Phase 3 (PageBanner)
+  noBanner: _noBanner
 } = Astro.props as Props;
 
-let contacts: any = null;
+type LayoutContacts = {
+  schoolName?: string;
+  address?: string;
+  phoneMain?: string;
+  phoneAdditional?: string[];
+  email?: string;
+  workingHours?: string;
+  socialLinks?: { label?: string; url?: string }[];
+};
+
+let contacts: LayoutContacts | null = null;
 try {
-	// This file is created in Phase 1 (`src/content/settings/contacts.md`)
-	const mod = await import('../content/settings/contacts.md');
-	contacts = (mod as any)?.frontmatter ?? null;
+  const contactsEntry = await getContacts();
+  contacts = (contactsEntry?.data as LayoutContacts | undefined) ?? null;
 } catch {
-	contacts = null;
+  contacts = null;
 }
 
-const siteTitle =
-	title ??
-	contacts?.schoolName ??
-	'КЗО «Магдалинівська спеціальна школа» ДОР';
+const siteTitle = title ?? contacts?.schoolName ?? 'КЗО «Магдалинівська спеціальна школа» ДОР';
+const siteDescription =
+  description ??
+  'Офіційний сайт КЗО «Магдалинівська спеціальна школа» Дніпропетровської обласної ради.';
 ---
 
 <!doctype html>
 <html lang="uk">
-	<head>
-		<meta charset="UTF-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1" />
-		<meta name="generator" content={Astro.generator} />
-		<title>{siteTitle}</title>
-		{description ? <meta name="description" content={description} /> : null}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <title>{siteTitle}</title>
+    <meta name="description" content={siteDescription} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Arimo:wght@400;700&family=Josefin+Sans:wght@400;600;700&family=Raleway:wght@400;600;700&family=Work+Sans:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"
+    />
 
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-	</head>
-	<body class="min-h-dvh bg-white text-slate-900">
-		<a
-			href="#main"
-			class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow"
-		>
-			Перейти до вмісту
-		</a>
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  </head>
+  <body class="min-h-dvh">
+    <a
+      href="#main"
+      class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-50 focus:rounded-md focus:bg-white focus:px-3 focus:py-2 focus:text-sm focus:shadow"
+    >
+      Перейти до вмісту
+    </a>
 
-		<Header
-			contacts={contacts}
-			breadcrumbs={breadcrumbs}
-			pageTitle={pageTitle}
-		/>
+    <Header
+      contacts={contacts}
+      breadcrumbs={breadcrumbs}
+      pageTitle={pageTitle}
+    />
 
-		<main id="main">
-			<slot />
-		</main>
+    <main id="main">
+      <slot />
+    </main>
 
-		<Footer contacts={contacts} />
-	</body>
+    <Footer contacts={contacts} />
+  </body>
 </html>

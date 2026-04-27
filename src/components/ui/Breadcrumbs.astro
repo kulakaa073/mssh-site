@@ -1,0 +1,28 @@
+---
+export type BreadcrumbItem = {
+  label: string;
+  href?: string;
+};
+
+type Props = {
+  items?: BreadcrumbItem[];
+};
+
+const { items = [] } = Astro.props as Props;
+const normalizedItems = items.filter((item) => item?.label?.trim());
+---
+
+{
+  normalizedItems.length > 0 && (
+    <ol class="breadcrumb">
+      {normalizedItems.map((item, index) => {
+        const isLast = index === normalizedItems.length - 1;
+        return (
+          <li class={isLast ? 'active' : undefined}>
+            {isLast || !item.href ? item.label : <a href={item.href}>{item.label}</a>}
+          </li>
+        );
+      })}
+    </ol>
+  )
+}
